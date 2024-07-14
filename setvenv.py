@@ -12,10 +12,13 @@ def create_and_activate_conda_env(env_file, env_name, exiftool_version):
     print("Your OS name is ", current_os)
     if 'windows' in current_os:
         # For windows computer
-        conda_activate_cmd = f"conda activate {env_name}"
-        subprocess.run(conda_create_cmd, shell=True)
-        subprocess.run(f"call {conda_activate_cmd}", shell=True)
-        print("Please manually download exiftool package here : https://exiftool.org/ and follow the instructions")
+        try:
+            conda_activate_cmd = f"conda activate {env_name}"
+            subprocess.run(conda_create_cmd, shell=True)
+            subprocess.run(f"call {conda_activate_cmd}", shell=True)
+            print("Please manually download exiftool package here : https://exiftool.org/ and follow the instructions")
+        except subprocess.CalledProcessError as e:
+            print(f"Error occurred: {e}")
     elif 'linux' in current_os :
         # For Linux computer
         try:
