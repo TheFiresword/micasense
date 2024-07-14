@@ -1,4 +1,6 @@
-[![Build Status](https://travis-ci.org/micasense/imageprocessing.svg?branch=master)](https://travis-ci.org/micasense/imageprocessing)
+# Readme
+
+NB: This code is strongly inspired from the official micasense github repo here : [text](https://github.com/micasense/imageprocessing/tree/master/micasense)
 
 ## Setting up the Raspberry Pi
 
