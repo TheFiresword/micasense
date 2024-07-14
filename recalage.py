@@ -82,6 +82,11 @@ def realign_images(root_path: str = "",
                    pyramid_levels: int = 2,
                    max_alignment_iterations: int = 50):
     # pyramid_levels:: for images with RigRelatives, setting this to 0 or 1 may improve alignment
+    print("root_path =", root_path)
+    print("panels_ids = ", panels_ids)
+    print("regenerate_matrices = ", regenerate_matrices)
+    print("save_as_stack = ", save_as_stack)
+    print("output_dir_name = ",output_dir_name)
     images_path = Path(root_path)
     panels_ids = panels_ids or []
     if not images_path.exists() or not images_path.is_dir():
@@ -160,7 +165,7 @@ def realign_images(root_path: str = "",
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Script for realigning the micasenses images")
     parser.add_argument("path", type=str, help="The path of a directory containing 1 images set")
-    parser.add_argument("--pid", type=List[str], help="A list of ids of pannels images in this set\n The id of the tif file \
+    parser.add_argument("--pid", type=str, nargs='+', help="A list of ids of pannels images in this set\n The id of the tif file \
         IMG_0000_1.tif is '0000'.\nAll the bands images with that id are automatically taken account\nEg : ['0001', '0002']")
     parser.add_argument("--regenerate", type=bool, help="If the warp matrices should be regenerated if it already exists")
     parser.add_argument("--stack", type=bool, help="If the realigned images should be saved as a single stack images of all the bands \
@@ -174,6 +179,11 @@ if __name__ == "__main__":
         args.path, args.pid, args.regenerate, args.stack, args.output, args.plevel, args.maxiter
     if panels_ids: assert isinstance(panels_ids, List) or isinstance(panels_ids, Tuple), "Pannels id arg should be a list or tuple"
     else: panels_ids = []
-    
+    if not regenerate_matrices: regenerate_matrices = True
+    if not save_as_stack: save_as_stack = True
+    if not output_dir_name: output_dir_name = "aligned"
+    if not pyramid_levels: pyramid_levels = 2
+    if not max_alignment_iterations: max_alignment_iterations = 50
+
     realign_images(root_path, panels_ids=panels_ids, regenerate_matrices=regenerate_matrices, save_as_stack=save_as_stack,
                    output_dir_name=output_dir_name, pyramid_levels=pyramid_levels, max_alignment_iterations=max_alignment_iterations)
